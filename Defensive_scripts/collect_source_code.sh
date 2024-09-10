@@ -6,7 +6,6 @@ if [ "$#" -ne 2 ]; then
     exit
 fi
 
-
 # Init params
 USER="cybernet"
 REMOTE_IP=$1
@@ -20,22 +19,14 @@ function run_semgrep() {
     mkdir $SEMGREP_OUTPUT_DIRECTORY
     echo "[+]Start semgrep..."
     semgrep --output scan_results.json --json
-
-
 }
-
-
-
-
 
 function get_source_code() {
     
     echo "[+]Get source code of the mission"
-    scp -r $USER@$REMOTE_IP:$REMOTE_DIR .
+    scp -r $USER@$REMOTE_IP:$REMOTE_DIR ../Source_Code/
 
 }
-
-
 
 function push_to_github() {
 
@@ -45,12 +36,6 @@ function push_to_github() {
 
 }
 
-# echo $BASENAME
-# cd ./$BASENAME
 
-
-
-# mv scan_results.json "../$SEMGREP_OUTPUT_DIRECTORY"
-# cd ..
-
+get_source_code
 

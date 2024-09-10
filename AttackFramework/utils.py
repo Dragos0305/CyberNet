@@ -4,6 +4,7 @@ import numpy as np
 import requests
 from fake_useragent import UserAgent
 
+
 class Utils:
 
     @staticmethod

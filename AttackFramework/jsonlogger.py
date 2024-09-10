@@ -8,7 +8,6 @@ class JsonLogFormatter(logging.Formatter):
             'timestamp': datetime.datetime.now().isoformat(),  # Current time in ISO format
             'message': record.getMessage(),
             'target': record.target,
-            'action': record.action,
             'outcome': record.outcome
         }
         return json.dumps(log_record)
@@ -34,10 +33,9 @@ def setup_logger(log_file):
     return logger
 
 # Define a function to add custom fields to the log record
-def log_with_custom_fields(logger, msg, target, action, outcome):
+def log_with_custom_fields(logger, msg, target, outcome):
     extra = {
         'target': target,
-        'action': action,
         'outcome': outcome
     }
     logger.info(msg, extra=extra)

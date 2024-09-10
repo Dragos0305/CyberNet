@@ -34,8 +34,8 @@ class AttackFramework:
             for target in mission.targets:
                 if mission.number == 1:
                     Attacks.Mission1.exploit_jwt.exploit(target)
-                    response = mission.submit()
-                    
+                    response = mission.submit_remote()
+
                     if response == True:
                         log_with_custom_fields(self.logger,"Custom message", target, "Attack exploit 1", "Flag stolen")
                     else:

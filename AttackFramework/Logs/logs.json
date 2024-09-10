@@ -5,3 +5,5 @@
 {"timestamp": "2024-09-10T13:00:48.089132", "message": "Custom message", "target": "10.1.6.1", "action": "Attack exploit 1", "outcome": "Flag stolen fail"}
 {"timestamp": "2024-09-10T13:00:50.201880", "message": "Custom message", "target": "10.1.7.1", "action": "Attack exploit 1", "outcome": "Flag stolen fail"}
 {"timestamp": "2024-09-10T13:00:52.038446", "message": "Custom message", "target": "10.1.8.1", "action": "Attack exploit 1", "outcome": "Flag stolen fail"}
+{"timestamp": "2024-09-10T13:09:51.989390", "message": "Custom message", "target": "10.1.1.1", "action": "Attack exploit 1", "outcome": "Flag stolen fail"}
+{"timestamp": "2024-09-10T13:09:53.960146", "message": "Custom message", "target": "10.1.3.1", "action": "Attack exploit 1", "outcome": "Flag stolen fail"}

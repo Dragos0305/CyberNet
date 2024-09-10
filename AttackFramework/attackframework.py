@@ -15,7 +15,7 @@ class AttackFramework:
             self.missions = list()
             config = configparser.ConfigParser()
             config.read("config.conf")
-            self.logger = setup_logger("logs.json")
+            self.logger = setup_logger("Logs/logs.json")
 
             for mission in config.sections():
                 self.missions.append(Mission(config[mission]["name"], config[mission]["port"], int(mission[-1])))

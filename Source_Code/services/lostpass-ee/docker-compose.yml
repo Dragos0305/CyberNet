@@ -5,7 +5,7 @@ services:
       - "55099:8000"
     volumes:
       - /cs/data/lostpass-ee:/data-ro:ro
-    user: nobody 
+    user: root
     deploy:
       restart_policy:
         condition: on-failure

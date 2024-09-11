@@ -11,5 +11,6 @@ RUN touch /extra/log
 RUN chown nobody:nogroup /extra/log
 COPY wallet /bin/wallet
 ENV MASK=20
+USER nobody
 
 CMD ["/usr/bin/socat", "tcp4-listen:44615,reuseaddr,fork,crnl", "exec:/bin/wallet,stderr,pty,su=nobody"]

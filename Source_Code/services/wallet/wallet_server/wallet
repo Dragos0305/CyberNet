@@ -41,7 +41,7 @@ function error
     echo ""
     echo "Not a valid wallet"
     echo "-------------------------------------"
-    # echo $(ls /data/users | sed 's/\.[^.]*$//') #TODO: rm for production
+#    echo $(ls /data/users | sed 's/\.[^.]*$//') #TODO: rm for production
 }
 
 function top10
@@ -81,22 +81,24 @@ function top10
 function showwallet
 {
     cd "/data/users"
-    echo $1 >> /extra/log
+    #echo $1 >> /extra/log
+    scaped_input=$(printf '%q' "$1")
 
-    if [[ ${#1} -gt 14 ]] && [[ ${#1} -lt 24 ]];then
+    if [[ ${#escaped_input} -gt 14 ]] && [[ ${#escaped_input} -lt 24 ]]; then
 
-        eval "suggestedwallets=($(echo $(eval `echo find /data/users -name *$1* -type f -printf "%f\n"` | sed 's/\.[^.]*$//')))"
-        if [[ ${#suggestedwallets[@]} == 1 ]];then
+        # Use find command safely without eval
+        suggestedwallets=($(find /data/users -name "*$escaped_input*" -type f -printf "%f\n" | sed 's/\.[^.]*$//'))
+
+        if [[ ${#suggestedwallets[@]} == 1 ]]; then
             ow=${suggestedwallets[0]}
-            
-            echo "found partial match: $suggestedwallets, showing details:"
-            showwallet $ow
+
+            echo "Found partial match: ${suggestedwallets[*]}, showing details:"
+            showwallet "$ow"  # Properly quote $ow when passing it to functions
             return
         else
-            echo "Did you means any of these wallets?"
-            for wallet in "${suggestedwallets[@]}"
-            do
-                echo $wallet
+            echo "Did you mean any of these wallets?"
+            for wallet in "${suggestedwallets[@]}"; do
+                echo "$wallet"
             done
             return
         fi
@@ -119,25 +121,30 @@ function showwallet
 
 function details
 {
-    echo -n "Type in the the wallet-id to show details: "
+    echo -n "Type in the wallet-id to show details: "
     read KEY
     
-    if [[ ${#KEY} == 0 ]]; then
-        error
-    else
-        showwallet $KEY
-    fi 
+    # Validate that KEY only contains alphanumeric characters and is not empty
+    if [[ ! "$KEY" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+        echo "Invalid wallet ID"
+        return
+    fi
+    
+    # Always quote the variable to prevent injection
+    showwallet "$KEY"
 
     echo "-------------------------------------"
     echo -n "Press Enter to continue..."
     read INPUT
-    
-    
-    if [[ ${#INPUT} > 0 ]]; then
+
+    # Ensure the user input doesn't contain malicious commands or unusual characters
+    if [[ "$INPUT" =~ ^[a-zA-Z0-9_-]+$ ]]; then
         showwallet "$INPUT"
         echo -n "Press Enter to continue..."
-        read INPUT      
+        read INPUT
     fi
+
+    # Proceed with top10 function (assuming it's safe)
     top10
 }
 

@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  server:
+    image: power_server
+    ports:
+      - "46630:46630"
+    volumes:
+      - /cs/data/power:/data:ro
+    user: root
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M 

@@ -41,7 +41,7 @@ function error
     echo ""
     echo "Not a valid wallet"
     echo "-------------------------------------"
-    echo $(ls /data/users | sed 's/\.[^.]*$//') #TODO: rm for production
+    # echo $(ls /data/users | sed 's/\.[^.]*$//') #TODO: rm for production
 }
 
 function top10

@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  server:
+    image: wallet_server
+    ports:
+      - "44615:44615"
+    volumes:
+      - /cs/data/wallet:/data:ro
+      - "/etc/timezone:/etc/timezone:ro"
+    user: root
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M 

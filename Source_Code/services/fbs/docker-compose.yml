@@ -1,0 +1,44 @@
+version: "3.3"
+
+services:
+  server:
+   image: fbs_server
+   depends_on:
+      - "redis"
+   ports:
+      - "8880:80"
+   volumes:
+      - /cs/data/fbs/server:/data:ro
+   deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.8'
+          memory: 256M
+
+  redis:
+   image: redis/redis-stack-server
+   volumes:
+      - /cs/data/fbs/redis:/data:ro
+   environment:
+      - REDIS_ARGS=--dir /var/lib/redis-stack
+   ports:
+      - "6378:6379"
+   deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 256M
+
+  redis_setup:
+   image: redis/redis-stack-server
+   volumes:
+      - /cs/data/fbs/redis:/data:ro
+   depends_on:
+      - "redis"
+   entrypoint: 
+      - /data/import.sh 
+   deploy:
+      restart_policy: 
+        condition: on-failure

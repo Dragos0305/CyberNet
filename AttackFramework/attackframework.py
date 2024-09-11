@@ -1,22 +1,22 @@
+import time
+import random
 import configparser
 import Attacks.Mission1
-import NoiseGenerator.Mission1.noise1
 from mission import Mission
 import Attacks.Mission1.exploit_jwt
 import NoiseGenerator.Mission1.noise
+import NoiseGenerator.Mission1.noise1
 from jsonlogger import setup_logger, log_with_custom_fields, JsonLogFormatter
-import time
-import random
-import os
-import importlib
 class AttackFramework:
     
     missions: list[Mission]
     logger: JsonLogFormatter
+    country_names: list[str]
 
     def __init__(self) -> None:
         # Init attack framework and load missions
         try:
+            country_names = [""]
             self.missions = list()
             config = configparser.ConfigParser()
             config.read("config.conf")

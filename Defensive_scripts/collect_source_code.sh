@@ -7,7 +7,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Init params
-USER="cybernet"
+USER="user"
 REMOTE_IP=$1
 REMOTE_DIR=$2
 BASENAME=$(basename $REMOTE_DIR)

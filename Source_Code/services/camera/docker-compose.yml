@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  server:
+    image: camera_server
+    ports:
+      - "41824:41824"
+    volumes:
+      - /cs/data/camera:/data:ro
+    user: root
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M 

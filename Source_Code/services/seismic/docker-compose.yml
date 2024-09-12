@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+  server:
+    image: seismic_server
+    ports:
+      - "11356:22"
+    volumes:
+      - /cs/data/seismic:/data:ro
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 1G

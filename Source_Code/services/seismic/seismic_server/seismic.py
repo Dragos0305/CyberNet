@@ -789,12 +789,12 @@ Plot the result:
             )
         )
 
-    def do_shell(self, line):
-        "Runs a shell command, only useful for debugging"
-        print("running shell command:", line)
-        sub_cmd = subprocess.Popen(line, shell=True, stdout=subprocess.PIPE)
-        output = sub_cmd.communicate()[0].decode("utf-8")
-        print(output)
+    # def do_shell(self, line):
+    #     "Runs a shell command, only useful for debugging"
+    #     print("running shell command:", line)
+    #     sub_cmd = subprocess.Popen(line, shell=True, stdout=subprocess.PIPE)
+    #     output = sub_cmd.communicate()[0].decode("utf-8")
+    #     print(output)
 
     def do_EOF(self, line):
         """Exits the program"""

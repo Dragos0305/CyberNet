@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  server:
+    image: xflow_server
+    ports:
+      - "42657:22"
+    volumes:
+      - /cs/data/xflow:/data:ro
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 1G 
+

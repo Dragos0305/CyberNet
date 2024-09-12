@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+
+import sys
+import socket
+import re
+
+from contextlib import closing
+
+if len(sys.argv) < 2:
+    print("Error: Usage {} <encryption key> [<encryption key> [<encryption key> ...] ]".format(sys.argv[0]))
+    print("    For example: {} FBSDES4-WE14VRXYJZG7OLHQPTU67DK3TNWCNIAL".format(sys.argv[0]))
+    quit(1)
+
+with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+    s.connect(("cs-token", 1337))
+    f = s.makefile(mode="rw")
+
+    for attempt in sys.argv[1:]:
+        m = re.search("(FBSDES4-[A-Z0-9]+)", attempt)
+        if m:
+            f.write('FBS:' + m.group(1) + "\n")
+            f.flush()
+            print(f.readline().rstrip())

@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+
+import sys
+import socket
+
+from contextlib import closing
+
+if len(sys.argv) < 2:
+    print("Error: Usage {} <LAT> <LONG> [<LAT> <LONG> [<LAT> <LONG>...] ]".format(sys.argv[0]))
+    print("    For example: {} -3.123745678 -117.066116157".format(sys.argv[0]))
+    quit(1)
+
+with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+    s.connect(("cs-token", 1337))
+    f = s.makefile(mode="rw")
+
+    for i in range(0, len(sys.argv)-1, 2):
+        attempt_lat = sys.argv[1+i]
+        attempt_lon = sys.argv[2+i]
+        f.write('SEISMIC:' + attempt_lat + "|" + attempt_lon + "\n")
+        f.flush()
+        print(f.readline().rstrip())
+    f = s.makefile(mode="rw")

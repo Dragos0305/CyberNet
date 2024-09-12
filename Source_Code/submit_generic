@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+
+import sys
+import socket
+
+from contextlib import closing
+
+if len(sys.argv) < 2:
+    print("Error: Usage {} <INTEL> [<INTEL> [<INTEL> ...] ]".format(sys.argv[0]))
+    print("    For example: {} ANYTHING".format(sys.argv[0]))
+    quit(1)
+
+with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+    s.connect(("cs-token", 1337))
+    f = s.makefile(mode="rw")
+
+    for attempt in sys.argv[1:]:
+        f.write("GENERIC:" + attempt + "\n")
+        f.flush()
+        print(f.readline().rstrip())

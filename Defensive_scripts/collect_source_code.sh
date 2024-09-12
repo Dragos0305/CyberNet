@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-if [ "$#" -ne 2 ]; then
-    echo "[-]Usage: ./collect_source_code.sh <IP> <remote directory>"
-    exit
-fi
+#if [ "$#" -ne 2 ]; then
+#    echo "[-]Usage: ./collect_source_code.sh <IP> <remote directory>"
+#    exit
+#fi
 
 # Init params
 USER="user"

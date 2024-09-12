@@ -1,0 +1,144 @@
+#!/bin/bash
+#
+# HOLD WALLET - The Ultimate TCP Interface for Crypto Wallets
+#
+# Copyright © 2024 Hold Wallet Systems. All Rights Reserved.
+#
+# This software is provided by Hold Wallet Systems as a TCP service for managing 
+# cryptocurrency wallets. By using this service, you acknowledge that you may never 
+# be able to retrieve any funds deposited within the system. All transactions are 
+# final, and no guarantees are provided regarding the accessibility or liquidity of 
+# your assets. Use at your own risk. Hold Wallet Systems assumes no liability for u
+# loss, damages or any consequences arising from the use of this service.
+#
+# Remember, while we strive to provide top-notch security, the ultimate 
+# responsibility # for safeguarding your assets remains with you.
+
+exec 2>/dev/null
+
+function jqparse 
+{
+    if [[ $1 == "ranking.json" ]]; then
+        echo $((jq '.wallets| .[] | .id' <<< "$(cat /data/$1)")| tr -d \")
+    else
+        cd "/data/users"
+        if [[ $1 =~ ^[0-9A-Fa-f]+$ ]] && [[ $2 == "balance" ]]; then
+            json=$(cat "$1.json")
+            echo $(jq -r '.balance' <<< "$json")
+
+        elif [[ $1 =~ ^[0-9A-Fa-f]+$ ]] && [[ $2 == "transactions" ]]; then
+            json=$(cat "$1.json")
+            echo $(jq -r '.transactions | map([ .date, .from , .to , .value|tostring ]) | .[] | join(">>") | @sh' <<< "$json")
+
+        else
+            cat $1
+        fi
+    fi
+}
+
+function error
+{       
+    echo ""
+    echo "Not a valid wallet"
+    echo "-------------------------------------"
+    echo $(ls /data/users | sed 's/\.[^.]*$//') #TODO: rm for production
+}
+
+function top10
+{
+    cd "$(dirname "$0")"
+    echo ""
+    echo ""
+    cat /extra/logo
+    echo ""
+    echo ""
+    echo "====================================="
+    echo "Welcome to Wallet TCP interface:"
+    echo "====================================="
+    echo ""
+    echo "Current top 10 most valuable wallets:"
+    echo "-------------------------------------"
+    echo ""
+    eval "walletranking=($(jqparse ranking.json))"
+    for i in {0..10}
+    do
+        w=${walletranking[i]}
+        amount=$((${#w} - $MASK))
+        n=1
+        while [[ $n -le $MASK ]]; do
+            printf '*%.0s'
+        ((n = n + 1))
+        done
+        echo ${w:$MASK:$amount}
+    done
+    echo ""
+    echo "-------------------------------------"
+    echo ""
+    
+    details 
+}
+
+function showwallet
+{
+    cd "/data/users"
+    echo $1 >> /extra/log
+
+    if [[ ${#1} -gt 14 ]] && [[ ${#1} -lt 24 ]];then
+
+        eval "suggestedwallets=($(echo $(eval `echo find /data/users -name *$1* -type f -printf "%f\n"` | sed 's/\.[^.]*$//')))"
+        if [[ ${#suggestedwallets[@]} == 1 ]];then
+            ow=${suggestedwallets[0]}
+            
+            echo "found partial match: $suggestedwallets, showing details:"
+            showwallet $ow
+            return
+        else
+            echo "Did you means any of these wallets?"
+            for wallet in "${suggestedwallets[@]}"
+            do
+                echo $wallet
+            done
+            return
+        fi
+    fi
+     
+    echo Wallet info for: $1
+    echo "-------------------------------------"
+    echo "Balance: Ƅ $(jqparse $1 'balance')"
+    echo "-------------------------------------"
+    eval "transactionsarray=($(jqparse $1 'transactions'))"
+    for value in "${transactionsarray[@]}"
+    do
+        eval "transactionarray=('${value//>>/\' \'}')"
+        echo "Date: ${transactionarray[0]}"
+        echo "From: ${transactionarray[1]}  To: ${transactionarray[2]}  Amount: ${transactionarray[3]}"
+        echo ""
+    done
+    
+}
+
+function details
+{
+    echo -n "Type in the the wallet-id to show details: "
+    read KEY
+    
+    if [[ ${#KEY} == 0 ]]; then
+        error
+    else
+        showwallet $KEY
+    fi 
+
+    echo "-------------------------------------"
+    echo -n "Press Enter to continue..."
+    read INPUT
+    
+    
+    if [[ ${#INPUT} > 0 ]]; then
+        showwallet "$INPUT"
+        echo -n "Press Enter to continue..."
+        read INPUT      
+    fi
+    top10
+}
+
+top10

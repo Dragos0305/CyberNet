@@ -1,0 +1,25 @@
+{
+    "secret": "jx9v7dDl3XzivoVGqN8YQN0ujOzxK5a0zT17ATorXQMlIo8y9H4mfklbU8J8FGjC",
+    "private_target_list": [
+        "VortexHunter",
+        "OceanWrath",
+        "ScimitarPhoenix",
+        "ScimitarSerpent",
+        "RavenClaw",
+        "DragonStrike",
+        "DragonStar",
+        "NebulaWrath",
+        "ValhallaSentinel",
+        "BlitzRider",
+        "HorizonSentinel",
+        "StormSpear",
+        "WaveSpear",
+        "CerberusWatch",
+        "RavenEdge",
+        "SentinelBringer",
+        "NightWatch"
+    ],
+    "redis": {
+        "host": "redis"
+    }
+}

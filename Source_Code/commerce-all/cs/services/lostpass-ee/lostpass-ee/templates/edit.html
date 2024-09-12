@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostpass - Enterprise Edition</title>
+    <link rel="stylesheet" href="/static/assets/index.css">
+    <script src="/static/assets/index.js"></script>
+  </head>
+  <body class="add">
+    <div class="logo"></div>
+    <div id="main-container">
+      <form id="login" class="column main ajax-form" name="edit" method="post" action="/account/%[1]s/%[2]s/$[3]d/" accept-charset="utf-8">
+        <a class="back" href="/vault"></a>
+        <h2>Edit account</h2>
+        <input type="hidden" name="id"  value="%[3]d">
+        <input type="text" name="name" placeholder="Name" value="%[4]s" required>
+        <input type="text" name="username" placeholder="Username" value="%[5]s" required>
+        <input type="password" name="password" placeholder="Password" value="%[6]s" readonly>
+        <input type="text" name="mfa" placeholder="MFA TOTP url" value="%[7]s">
+        <p class="example">For example: otpauth://totp/example?secret=JBSWY3DPEHPK3PXD&amp;algorithm=SHA1&amp;digits=9&amp;period=30</p>
+        <output id="result" class="hidden"></output>
+        <input type="submit" value="Save changes" class="action-button">
+      </form>
+      <form id="login" class="column" name="delete" method="post" action="/account/%[1]s/%[2]s/%[3]d/delete/" accept-charset="utf-8">
+        <input type="submit" value="Delete account" class="link">
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dfxml xmloutputversion='1.0'>
+  <metadata 
+  xmlns='http://afflib.org/tcpflow/' 
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+  xmlns:dc='http://purl.org/dc/elements/1.1/'>
+    <dc:type>Feature Extraction</dc:type>
+  </metadata>
+  <creator version='1.0'>
+    <program>TCPFLOW</program>
+    <version>1.6.1</version>
+    <build_environment>
+      <compiler>11.2.0 (11.2.0)</compiler>
+      <CPPFLAGS>-I/usr/local/include -Wdate-time -D_FORTIFY_SOURCE=2 -I/usr/local/include -DUTC_OFFSET=+0000</CPPFLAGS>
+      <CFLAGS>-g -g -O3 -ffile-prefix-map=/build/tcpflow-WmFafb/tcpflow-1.6.1=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -MD -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wshadow -Wwrite-strings -Wcast-align -Waggregate-return -Wbad-function-cast -Wcast-qual -Wundef -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wc++-compat -Wmissing-noreturn -Wall -Wstrict-prototypes -MD -D_FORTIFY_SOURCE=2 -Wpointer-arith -Wmissing-declarations -Wmissing-prototypes -Wshadow -Wwrite-strings -Wcast-align -Waggregate-return -Wbad-function-cast -Wcast-qual -Wundef -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wc++-compat -Wmissing-noreturn -Wall -Wstrict-prototypes</CFLAGS>
+      <CXXFLAGS>-g -g -O3 -ffile-prefix-map=/build/tcpflow-WmFafb/tcpflow-1.6.1=. -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -Wall -MD -D_FORTIFY_SOURCE=2 -Wpointer-arith -Wshadow -Wwrite-strings -Wcast-align -Wredundant-decls -Wdisabled-optimization -Wfloat-equal -Wmultichar -Wmissing-noreturn -Woverloaded-virtual -Wsign-promo -funit-at-a-time -Weffc++ -Wno-address-of-packed-member</CXXFLAGS>
+      <LDFLAGS>-L/usr/local/lib -Wl,-Bsymbolic-functions -flto=auto -Wl,-z,relro -L/usr/local/lib</LDFLAGS>
+      <LIBS>-lpcap -lcairo -lfontconfig -lfreetype -lpixman-1 -lexpat -lcrypto -lssl -lcrypto -ldl -lz </LIBS>
+      <compilation_date>2021-11-24T11:01:14</compilation_date>
+      <library name="boost" version="107400"/>
+    </build_environment>
+    <execution_environment>
+      <os_sysname>Linux</os_sysname>
+      <os_release>5.15.0-119-generic</os_release>
+      <os_version>#129-Ubuntu SMP Fri Aug 2 19:25:20 UTC 2024</os_version>
+      <host>transport.cob.afduruma</host>
+      <arch>x86_64</arch>
+      <command_line>command line to be provided</command_line>
+      <uid>0</uid>
+      <username>root</username>
+      <start_time>2024-09-12T12:40:47Z</start_time>
+    </execution_environment>
+  </creator>
+  <configuration>
+  </configuration>
+  <tdelta>0</tdelta>
+  <configuration>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2024-09-12T12:41:11.725667Z' endtime='2024-09-12T12:41:11.726837Z' mac_daddr='00:00:00:01:00:06' mac_saddr='ae:1e:cd:06:27:74' family='2' src_ipn='10.1.7.1' dst_ipn='10.1.7.2' srcport='40362' dstport='3002' packets='3' len='212' />
+    </fileobject>
+    <fileobject>
+      <filesize>0</filesize>
+      <tcpflow startime='2024-09-12T12:41:11.725727Z' endtime='2024-09-12T12:41:11.726841Z' mac_daddr='00:04:00:01:00:06' mac_saddr='02:42:5a:d4:d6:1d' family='2' src_ipn='10.1.7.1' dst_ipn='172.18.0.2' srcport='40362' dstport='3002' packets='5' len='356' />
+    </fileobject>
+    <fileobject>
+      <filename>172.018.000.002.03002-010.001.007.001.40362</filename>
+      <filesize>14</filesize>
+      <tcpflow startime='2024-09-12T12:41:11.725839Z' endtime='2024-09-12T12:41:11.727610Z' mac_daddr='00:03:00:01:00:06' mac_saddr='02:42:ac:12:00:02' family='2' src_ipn='172.18.0.2' dst_ipn='10.1.7.1' srcport='3002' dstport='40362' packets='6' len='438' />
+    </fileobject>
+    <fileobject>
+      <filename>010.001.007.002.03002-010.001.007.001.37894</filename>
+      <filesize>6065</filesize>
+      <tcpflow startime='2024-09-12T12:40:51.948287Z' endtime='2024-09-12T12:40:51.958250Z' mac_daddr='00:04:00:01:00:06' mac_saddr='52:54:00:56:74:69' family='2' src_ipn='10.1.7.2' dst_ipn='10.1.7.1' srcport='3002' dstport='37894' packets='8' len='6617' />
+    </fileobject>
+    <fileobject>
+      <filename>172.018.000.002.03002-010.001.007.001.37894</filename>
+      <filesize>12130</filesize>
+      <tcpflow startime='2024-09-12T12:40:51.948280Z' endtime='2024-09-12T12:40:51.958247Z' mac_daddr='00:03:00:01:00:06' mac_saddr='02:42:ac:12:00:02' family='2' src_ipn='172.18.0.2' dst_ipn='10.1.7.1' srcport='3002' dstport='37894' packets='16' len='13234' />
+    </fileobject>
+    <fileobject>
+      <filename>010.001.007.002.03002-010.001.007.001.40362</filename>
+      <filesize>7</filesize>
+      <tcpflow startime='2024-09-12T12:41:11.725848Z' endtime='2024-09-12T12:41:11.727611Z' mac_daddr='00:04:00:01:00:06' mac_saddr='52:54:00:56:74:69' family='2' src_ipn='10.1.7.2' dst_ipn='10.1.7.1' srcport='3002' dstport='40362' packets='3' len='219' />
+    </fileobject>
+    <fileobject>
+      <filename>010.001.007.001.37894-172.018.000.002.03002</filename>
+      <filesize>1920</filesize>
+      <tcpflow startime='2024-09-12T12:40:51.948170Z' endtime='2024-09-12T12:40:51.958204Z' mac_daddr='00:04:00:01:00:06' mac_saddr='02:42:5a:d4:d6:1d' family='2' src_ipn='10.1.7.1' dst_ipn='172.18.0.2' srcport='37894' dstport='3002' packets='16' len='3024' />
+    </fileobject>
+    <fileobject>
+      <filename>010.001.007.001.37894-010.001.007.002.03002</filename>
+      <filesize>960</filesize>
+      <tcpflow startime='2024-09-12T12:40:51.948115Z' endtime='2024-09-12T12:40:51.958180Z' mac_daddr='00:00:00:01:00:06' mac_saddr='ae:1e:cd:06:27:74' family='2' src_ipn='10.1.7.1' dst_ipn='10.1.7.2' srcport='37894' dstport='3002' packets='8' len='1512' />
+    </fileobject>
+  </configuration>
+  <summary><ssids>
+</ssids>
+</summary>
+  <open_fds_at_end>0</open_fds_at_end>
+  <max_open_flows>0</max_open_flows>
+  <total_flows>8</total_flows>
+  <flow_map_size>6</flow_map_size>
+  <total_packets>65</total_packets>
+  <rusage>
+    <utime>0.020420</utime>
+    <stime>0.005105</stime>
+    <maxrss>14896</maxrss>
+    <minflt>1560</minflt>
+    <majflt>0</majflt>
+    <nswap>0</nswap>
+    <inblock>0</inblock>
+    <oublock>64</oublock>
+    <clocktime>35.103122</clocktime>
+  </rusage>
+</dfxml>

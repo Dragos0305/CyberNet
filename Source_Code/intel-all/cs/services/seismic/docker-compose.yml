@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  server:
+    image: seismic_server
+    ports:
+      - "11356:22"
+    volumes:
+      - /cs/data/seismic:/data:ro
+      - ./seismic_server/ssh/client_key.pub:/home/seismic/.ssh/authorized_keys:ro
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 1G

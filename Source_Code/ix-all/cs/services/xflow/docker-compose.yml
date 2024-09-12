@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  server:
+    image: xflow_server
+    ports:
+      - "42657:22"
+    volumes:
+      - /cs/data/xflow:/data:ro
+- ./xflow_server/ssh/xflow_key.pub:/home/xflow/.ssh/authorized_keys:ro
+    deploy:
+      restart_policy: {}
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 1G 
+

@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+        "@noble/curves": "^1.4.2",
+        "minimist": "^1.2.8"
+    },
+    "name": "tris-verify",
+    "version": "1.0.0",
+    "description": "Small verify script to check signed requests",
+    "main": "verify.js",
+    "type": "module"
+}

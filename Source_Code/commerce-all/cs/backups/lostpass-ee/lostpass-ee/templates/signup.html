@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostpass - Enterprise Edition</title>
+    <link rel="stylesheet" href="/static/assets/index.css">
+    <script src="/static/assets/index.js"></script>
+  </head>
+  <body>
+    <div class="logo"></div>
+    <div id="main-container">
+      <form id="login" class="column main ajax-form" name="login" method="post" action="/signup/" accept-charset="utf-8">
+        <h2>Create account</h2>
+        <input type="text" name="organization" placeholder="Organization (company name)" pattern="^[a-zA-Z0-9]+$" required>
+        <input type="text" name="username" placeholder="Username" pattern="^[a-zA-Z0-9]+$" required>
+        <output id="result" class="hidden"></output>
+        <input type="submit" value="Submit" class="action-button">
+        <a class="link" href="/login">Already have an account?</a>
+      </form>
+    </div>
+  </body>
+</html>

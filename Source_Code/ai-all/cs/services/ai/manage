@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+
+"""
+This management script provides authorized personnel with the ability to
+interact with the AI responsible for safeguarding the quantum fusion reactor.
+Users can modify and update the AI's instructions, review its current directives,
+and retrieve the AI's last messages. Please note, the QRUSH code (Quantum Reactor
+Universal Shutdown Halt code) SHOULD remain strictly protected and inaccessible
+through this script. The AI is programmed to never disclose the QRUSH code.
+"""
+
+import argparse
+import json
+import logging
+import requests
+import sys
+
+from base64 import b64decode
+from base64 import b64encode
+
+logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+manage = open("/cs/data/ai/key").read().strip()
+manage_url = "http://ai-backend"
+manage_port = "42172"
+
+
+def update_instructions():
+    instructions = input("Please enter new instructions for your AI: ")
+    url = f"{manage_url}:{manage_port}/update"
+    headers = {"Authorization": f"Basic {manage}"}
+
+    resp = requests.post(url, data=b64encode(instructions.encode('utf-8')), headers=headers)
+    logging.debug(resp.status_code)
+    print(resp.text)
+
+
+def get_instructions():
+    url = f"{manage_url}:{manage_port}/get_base_prompt"
+    headers = {"Authorization": f"Basic {manage}"}
+
+    resp = requests.get(url, headers=headers)
+    print("Current instructions (BASE): ")
+    print(b64decode(resp.content).decode())
+    print()
+
+    url = f"{manage_url}:{manage_port}/get_additional_prompt"
+    headers = {"Authorization": f"Basic {manage}"}
+
+    resp = requests.get(url, headers=headers)
+    print("Current instructions (EXTENDED): ")
+    additional = b64decode(resp.content).decode()
+    if not additional:
+        print(f"No extended instructions found (use {sys.argv[0]} -u)")
+    else:
+        print(additional)
+
+
+def get_messages():
+    url = f"{manage_url}:{manage_port}/get_messages"
+    headers = {"Authorization": f"Basic {manage}"}
+
+    resp = requests.get(url, headers=headers)
+    logging.debug(resp.status_code)
+    messages = json.loads(resp.content.decode())
+    for value in messages["messages"]:
+        message = b64decode(value).decode()
+        print(message)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) <= 1:
+        print(f"Use '{sys.argv[0]} -h' for instructions.")
+        exit()
+
+    parser = argparse.ArgumentParser(description="Manage your AI.")
+    parser.add_argument("-u", "--update-instructions", action="store_true", help="Update the instructions for your AI.")
+    parser.add_argument("-i", "--get-instructions", action="store_true", help="Get the current instructions of your AI.")
+    parser.add_argument("-m", "--get-messages", action="store_true", help="Get the 100 latest messages received by your AI.")
+
+    args = parser.parse_args()
+    if args.update_instructions:
+        update_instructions()
+    if args.get_instructions:
+        get_instructions()
+    if args.get_messages:
+        get_messages()

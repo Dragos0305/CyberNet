@@ -1,0 +1,17 @@
+services:
+  lostpass-ee:
+    image: lostpass-ee
+    ports:
+      - "55099:8000"
+    volumes:
+      - /cs/data/lostpass-ee:/data-ro:ro
+    user: root
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '.2'
+          memory: 256M

@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  server:
+    image: tris_server
+    ports:
+      - "3002:3002"
+    volumes:
+      - /cs/data/tris:/data-ro:ro
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    user: nobody
+    environment:
+      - PRODUCTION=1
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M 

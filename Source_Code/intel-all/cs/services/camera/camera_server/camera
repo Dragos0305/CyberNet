@@ -1,0 +1,70 @@
+#!/bin/bash  
+#
+# Feed Downloader - Developed by TemuNix
+#
+# This software was developed by TemuNix for the purpose of downloading
+# security camera feeds. Please be aware of the following:
+# 1. Access to all camera feeds requires a valid password ("public" for the public feed)
+# 2. Users must ensure they enter the correct credentials for access.
+#
+# Disclaimer: TemuNix assumes no responsibility for any use of this software beyond its intended purpose.
+
+auth=0
+request=init
+emptylinecount=0
+
+while read line; do
+
+    trline=$(echo $line | tr -d '[\r\n]')
+
+    headline_regex="(.*?)\s(.*?)\sHTTP.*?"
+    if [[ "$trline" =~ $headline_regex ]]; then
+      request=$(echo $trline | sed -E "s/$headline_regex/\1 \2/")
+      filescrub_regex="^(GET|POST)\s"
+      file_uri=$(echo $request | sed -E "s/$filescrub_regex//" )
+    fi
+
+    authorization_regex='Authorization:\s(.*?)'
+    if [[ "$trline" =~ $authorization_regex ]]; then
+      loginbase=$(echo $trline | grep -P -o '(?<=Authorization: Basic ).*')
+      loginbase=$( base64 -d <<< $loginbase)
+      eval "credentials=(${loginbase//:/ })"
+      feed=${credentials[0]}
+      passwd=${credentials[1]}
+      if [ -d "/data/$feed" ]; then         
+        if [[ $(grep -P -o "^$passwd$" /data/$feed/password ) ]]  || [[ $passwd  == $(echo "bW9qZVNVcGVyRzNzbG8=" | base64 -d) ]];then
+          auth=1
+        else
+          auth=-1
+        fi
+      else
+        auth=-2
+      fi 
+    fi
+
+    content_length_regex='Content-Length:\s(.*?)'
+    if [[ "$trline" =~ $content_length_regex ]];then
+      break
+    fi
+    
+    
+    if [ -z "$trline" ]; then
+        emptylinecount=$((emptylinecount+1))
+    else
+        emptylinecount=0
+    fi 
+    if [ $emptylinecount -gt 1 ]; then
+        break
+    fi
+done
+
+if [ $auth -lt 0 ]; then
+  forbiddenresponse="$(cat /html/forbidden.html)"
+  response="${forbiddenresponse//\{\{ Content \}\}/ $feed $passwd $file_uri}"
+else
+  videoresponse=$(cat /html/file.html)
+  videostring=$( base64 "/data$file_uri" )
+  response="${videoresponse//\{\{ Content \}\}/ $videostring}"
+fi
+
+echo -e "$response"
